@@ -1,0 +1,11 @@
+{
+  "name": "@rstone770/resize",
+  "version": "0.0.0",
+  "description": "Window and element resize handling. ",
+  "main": "bin/resize.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Brenden Snyder <rstone770@gmail.com>",
+  "license": "MIT"
+}
