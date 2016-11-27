@@ -9,6 +9,40 @@
 } (this, function () {
 
   /**
+   * Default function debounce period.
+   * 
+   * @type {number}
+   */
+  var DEBOUNCE_PERIOD = 1000/60; // 60fps
+
+  /**
+   * Debounces some function so that its called at most ever 'wait' ms.
+   * 
+   * @param {function} fn
+   * @param {wait} wait
+   * @returns {function}
+   */
+  var debounce = function (fn, wait) {
+    var timeoutHandle = null, called = 0;
+
+    if (wait == 0) {
+      return fn;
+    }
+
+    return function () {
+      var currentArguments = arguments;
+
+      if (timeoutHandle != null) {
+        clearTimeout(timeoutHandle);
+      }
+
+      timeoutHandle = setTimeout(function() {
+        fn.apply(null, currentArguments);
+      }, wait || DEBOUNCE_PERIOD);
+    };
+  };
+
+  /**
    * Retrieves an array of elements that matches selector.
    * 
    * @param {*} selector
@@ -91,7 +125,6 @@
      * @param {function} iterator
      */
     var forEach = function (iterator) {
-      console.log(store);
       Object.keys(store).forEach(function (key) {
         iterator(store[key]);
       });
@@ -221,7 +254,7 @@
       });
 
       if (!isListening) {
-        window.addEventListener('resize', handleResize);
+        window.addEventListener('resize', debounce(handleResize));
         isListening = true;
       }
 
